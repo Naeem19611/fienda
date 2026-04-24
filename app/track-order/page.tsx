@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 // Playfair Display ফন্ট ইম্পোর্ট
 import { Playfair_Display } from 'next/font/google'; 
 import { 
@@ -23,7 +24,7 @@ const playfair = Playfair_Display({
   display: 'swap',
 });
 
-const LostPasswordPage = () => {
+const TrackOrderPage = () => {
   // মেনু এবং ড্রপডাউন স্টেট
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState("");
@@ -164,63 +165,100 @@ const LostPasswordPage = () => {
       </nav>
 
       {/* --- 4. TRAPEZOID SECTION --- */}
-      <section className="relative w-full flex justify-center mb-2">
-        <div className="absolute inset-0 flex justify-center items-start pointer-events-none">
-          <div 
-            className="bg-[#e2ddd3] w-[85%] md:w-[45%] h-20 md:h-28"
-            style={{ clipPath: 'polygon(10% 0%, 90% 0%, 82% 100%, 18% 100%)' }}
-          ></div>
+      <section className="relative w-full flex justify-center mb-6 md:mb-10 px-4">
+      {/* --- Inverted Trapezoid Background --- */}
+      <div className="absolute inset-0 flex justify-center items-start pointer-events-none">
+        <div 
+          className="bg-[#e2ddd3] w-full sm:w-[85%] md:w-[50%] lg:w-[40%] h-24 md:h-32"
+          style={{ clipPath: 'polygon(0% 0%, 100% 0%, 88% 100%, 12% 100%)' }}
+        ></div>
+      </div>
+
+      {/* --- Content Container --- */}
+      <div className="relative z-10 w-full max-w-7xl flex items-center justify-center min-h-[6rem] md:min-h-[8rem]">
+        
+        {/* Center Content: Home Link + Title */}
+        <div className="flex flex-col items-center text-center px-2">
+          <Link 
+            href="/fr" 
+            className="flex items-center gap-1 text-[10px] md:text-xs text-neutral-600 hover:text-black transition-colors mb-1"
+          >
+            <span>Accueil</span> 
+            <IoIosArrowForward className="text-[8px]" />
+          </Link>
+          
+          <h1 className="text-lg sm:text-xl md:text-3xl font-serif text-[#1a1a1a] tracking-tight md:tracking-wider uppercase break-words">
+            Suivre ma commande
+          </h1>
         </div>
 
-        <div className="relative z-10 w-full max-w-7xl px-6 md:px-12 flex items-center justify-center h-20 md:h-28">
-          <div className="absolute left-1/2 -translate-x-1/2 text-[#1a1a1a] flex flex-col items-center gap-1">
-            <Link href="/fr" className="text-xs md:hidden text-neutral-500 hover:text-[#1a1a1a] transition-colors">
-              Accueil ❯
-            </Link>
-            <h1 className="text-md md:text-xl font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase text-center leading-tight">
-              Suivre la commande
-            </h1>
-          </div>
-
-          <div className="ml-auto hidden md:block">
-            <button 
-              onClick={() => window.history.back()} 
-              className="flex items-center gap-1.5 text-sm font-medium text-[#1a1a1a] hover:opacity-70 transition-all"
-            >
-              <span className="text-[10px]">❮</span> Retour à la page précédente
-            </button>
-          </div>
+        {/* Right Side: Back Button (Responsive visibility) */}
+        <div className="absolute right-0 hidden lg:block">
+          <button 
+            onClick={() => window.history.back()} 
+            className="flex items-center gap-1 text-xs md:text-sm font-medium text-[#1a1a1a] hover:opacity-60 transition-all"
+          >
+            <IoIosArrowBack className="text-[10px]" /> 
+            <span>Retour à la page précédente</span>
+          </button>
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* --- 5. LOST PASSWORD MAIN CONTENT --- */}
-      <main className="max-w-4xl mx-auto px-6 py-12 md:py-20 flex flex-col items-center">
-        <div className="max-w-2xl text-center mb-10 md:mb-12">
-          <p className="text-[#666] md:text-[#85827B] text-[14px] md:text-[16px] leading-[1.8] font-medium">
-            Mot de passe oublié ? Veuillez saisir votre identifiant ou votre adresse e-mail. Vous recevrez par e-mail un lien pour créer un nouveau mot de passe.
-          </p>
+    {/* --- TRACK ORDER FORM SECTION --- */}
+<section className="w-full py-8 md:py-12 px-4 sm:px-6 md:px-12 lg:px-24">
+  <div className="max-w-7xl mx-auto flex justify-start">
+    {/* Main Content Wrapper - Aligned to Left */}
+    <div className="w-full max-w-xl text-left">
+      
+      <h2 className="text-xl md:text-2xl font-serif text-[#1a1a1a] mb-4 leading-tight">
+        Restez toujours informé de l'état de votre commande
+      </h2>
+      
+      {/* Decorative Line */}
+      <div className="w-full h-[1px] bg-neutral-600 mb-6"></div>
+
+      <p className="text-xs md:text-sm text-neutral-500 leading-relaxed mb-8 font-light">
+        Pour suivre votre commande, veuillez saisir votre numéro de commande dans la case ci-dessous et appuyer sur le bouton « Suivre ». Celui-ci vous a été communiqué sur votre reçu et dans l'e-mail de confirmation que vous avez dû recevoir.
+      </p>
+
+      <form className="space-y-5 md:space-y-6" onSubmit={(e) => e.preventDefault()}>
+        {/* Order ID Input */}
+        <div>
+          <label className="block text-sm font-serif text-[#1a1a1a] mb-2">
+            Numéro de commande
+          </label>
+          <input 
+            type="text" 
+            placeholder="Found in your confirmation email."
+            className="w-full bg-[#e2ddd3] border-none py-3 px-4 focus:ring-1 focus:ring-neutral-400 outline-none transition-all placeholder:text-neutral-400/60 text-sm"
+          />
         </div>
 
-        <form className="w-full max-w-[420px] space-y-6 md:space-y-7">
-          <div className="space-y-3">
-            <label className="block text-[15px] md:text-[13px] font-bold text-black tracking-wide">
-              Identifiant ou adresse e-mail *
-            </label>
-            <input 
-              type="text" 
-              className="w-full bg-[#e5e1da] border border-[#cfcbc4] py-4 px-5 focus:outline-none focus:border-gray-500 transition-all text-gray-800"
-            />
-          </div>
-          <div className="pt-2">
-            <button 
-              type="submit"
-              className="w-full bg-[#f2e6cf] hover:bg-[#e9dab9] text-black font-bold py-4 text-[16px] md:text-[17px] tracking-[0.08em] transition-all border border-[#d3c7ad] shadow-sm"
-            >
-              Réinitialiser le mot de passe
-            </button>
-          </div>
-        </form>
-      </main>
+        {/* Billing Email Input */}
+        <div>
+          <label className="block text-sm font-serif text-[#1a1a1a] mb-2">
+            E-mail de facturation
+          </label>
+          <input 
+            type="email" 
+            placeholder="Email you used during checkout."
+            className="w-full bg-[#e2ddd3] border-none py-3 px-4 focus:ring-1 focus:ring-neutral-400 outline-none transition-all placeholder:text-neutral-400/60 text-sm"
+          />
+        </div>
+
+        {/* Submit Button */}
+        <button 
+          type="submit"
+          className="w-full sm:w-auto bg-[#efe1cc] text-[#1a1a1a] px-10 py-3 font-serif text-lg hover:bg-[#e2ddd3] transition-colors duration-300"
+        >
+          Suivre
+        </button>
+      </form>
+
+    </div>
+  </div>
+</section>
 
       {/* --- 6. NEWSLETTER SECTION --- */}
       <section className="md:hidden relative w-full h-[450px] flex items-center justify-center mt-10">
@@ -304,4 +342,4 @@ const LostPasswordPage = () => {
   );
 };
 
-export default LostPasswordPage;
+export default TrackOrderPage;
